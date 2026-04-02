@@ -1,7 +1,4 @@
-# davinci-resolve-color-by-duration
-DaVinci Resolve script that colors timeline video clips by duration.
-
-# Resolve Color by Duration
+# Davinci Resolve Color by Duration
 
 Color timeline **video clips** on the DaVinci Resolve **Edit** page based on clip duration.
 
