@@ -180,24 +180,6 @@ That is already the current behavior. The script scans only:
 timeline.GetItemListInTrack("video", TRACK_INDEX)
 ```
 
-### Some clips fail to color
-
-That usually means a color name is not accepted by Resolve. The included defaults use names that worked in testing: `Pink`, `Orange`, `Yellow`, `Navy`.
-
-### I tried `pip install DaVinciResolveScript` and it failed
-
-That is expected. `DaVinciResolveScript` is not a PyPI package. This script is meant to run inside Resolve from the Scripts menu and does not require any pip installation.
-
----
-
-## Known limitations
-
-- Windows-focused instructions only
-- One video track per run
-- Must be run from inside Resolve
-- Does not color audio clips
-- Does not automatically scan all video tracks
-
 ---
 
 ## Suggested workflow
