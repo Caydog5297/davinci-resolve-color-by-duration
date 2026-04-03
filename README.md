@@ -1,41 +1,31 @@
-# Davinci Resolve Color by Duration
+# DaVinci Resolve Color by Duration
 
-Color timeline **video clips** on the DaVinci Resolve **Edit** page based on clip duration.
-
-This script is designed for editors who want to quickly visualize pacing in multicam edits, podcast timelines, interviews, and other cut-heavy sequences.
+Color timeline video clips on the DaVinci Resolve Edit page based on clip duration. This script is designed for editors who want to quickly visualize pacing in the cut-heavy sequences.
 
 ## What it does
 
-On a chosen **video track**, the script colors clips using these rules by default:
+The script scans **all video tracks** in the current timeline and colors clips using these rules by default:
 
-| Duration | Color |
-|---|---|
-| Under 3 seconds | Pink |
+| Duration             | Color  |
+| -------------------- | ------ |
+| Under 3 seconds      | Pink   |
 | 3 to under 4 seconds | Orange |
 | 4 to under 5 seconds | Yellow |
-| 5 seconds and up | Navy |
+| 5 seconds and up     | Navy   |
 
-Only **video clips** are targeted. Audio tracks are not modified.
+Only video clips are targeted. Audio tracks are not modified.
 
 ## Requirements
-
 - Windows
 - DaVinci Resolve installed
 - A project and timeline open in Resolve
 - Access to your Resolve user scripts folder
 
-No `pip install` is required.
-
-## Important
-
-This is a **DaVinci Resolve script**, not a standalone Windows application.
-
 Users should:
-
 1. Download `ColorByDuration.py`
-2. Copy it into Resolve's **Edit scripts** folder
+2. Copy it into Resolve's Edit scripts folder
 3. Restart Resolve
-4. Run it from **Workspace > Scripts > Edit**
+4. Run it from `Workspace > Scripts`
 
 ---
 
@@ -53,13 +43,11 @@ Place the file here:
 C:\Users\<YOUR-USERNAME>\AppData\Roaming\Blackmagic Design\DaVinci Resolve\Support\Fusion\Scripts\Edit\
 ```
 
-**Example:**
+Example:
 
 ```
 C:\Users\Cayden Drake\AppData\Roaming\Blackmagic Design\DaVinci Resolve\Support\Fusion\Scripts\Edit\
 ```
-
-If the `Edit` folder does not exist, create it.
 
 > **Tip:** To get to AppData quickly, press `Win + R`, type `%appdata%`, and press Enter. Then navigate to `Blackmagic Design\DaVinci Resolve\Support\Fusion\Scripts\Edit\`.
 
@@ -67,41 +55,14 @@ If the `Edit` folder does not exist, create it.
 
 Resolve may not detect newly added scripts until it is restarted.
 
----
-
 ## How to use
 
-1. Open **DaVinci Resolve**
+1. Open DaVinci Resolve
 2. Open the target project and timeline
-3. Go to the **Edit** page
-4. Make sure the target clips are on the video track you want to scan
-5. Run: **Workspace > Scripts > Edit > ColorByDuration**
+3. Go to the Edit page
+4. Run **Workspace > Scripts > ColorByDuration**
 
-The script will color the clips on the configured video track and print a summary.
-
----
-
-## Default track selection
-
-By default, the script scans **Video Track 1**:
-
-```python
-TRACK_INDEX = 1
-```
-
-Change this if your clips are on another track:
-
-- `1` = V1
-- `2` = V2
-- `3` = V3
-
-**Example for V2:**
-
-```python
-TRACK_INDEX = 2
-```
-
----
+The script will scan every video track in the current timeline, color the clips, and print a summary in Resolve's console output.
 
 ## Customizing the duration buckets
 
@@ -119,7 +80,7 @@ def get_color_for_duration_seconds(duration_seconds: float) -> str:
         return "Navy"
 ```
 
-**Example with different thresholds:**
+Example with different thresholds:
 
 ```python
 def get_color_for_duration_seconds(duration_seconds: float) -> str:
@@ -133,24 +94,40 @@ def get_color_for_duration_seconds(duration_seconds: float) -> str:
         return "Navy"
 ```
 
----
-
 ## Example output
 
 After running, the script prints a summary like this in Resolve's console output:
 
 ```
-Done.
-Track: V1
+Starting clip coloring across all video tracks...
 Timeline FPS: 24.0
-Pink (<3s): 79
-Orange (3s to <4s): 29
-Yellow (4s to <5s): 33
-Navy (>=5s): 143
+Video tracks found: 3
+
+Track V1 done.
+  Pink (<3s): 79
+  Orange (3s to <4s): 29
+  Yellow (4s to <5s): 33
+  Navy (>=5s): 143
+  Failed: 0
+
+Track V2 done.
+  Pink (<3s): 12
+  Orange (3s to <4s): 8
+  Yellow (4s to <5s): 4
+  Navy (>=5s): 20
+  Failed: 0
+
+Track V3: no clips found.
+
+Done.
+Tracks scanned: 3
+Total clips colored: 328
+Pink (<3s): 91
+Orange (3s to <4s): 37
+Yellow (4s to <5s): 37
+Navy (>=5s): 163
 Failed: 0
 ```
-
----
 
 ## Troubleshooting
 
@@ -168,40 +145,32 @@ Then restart Resolve.
 
 Check:
 
-- The clips are on the correct video track
-- `TRACK_INDEX` matches that track
+- A timeline is open
+- The timeline contains video clips
 - Resolve was restarted after adding or editing the script
 
 ### I only want video clips colored
 
-That is already the current behavior. The script scans only:
-
-```python
-timeline.GetItemListInTrack("video", TRACK_INDEX)
-```
-
----
+That is already the current behavior. The script scans only video tracks and does not modify audio tracks.
 
 ## Suggested workflow
 
 1. Run the script
 2. Zoom out on the timeline
-3. Scan for clusters of short-duration colors (Pink, Orange)
+3. Scan for clusters of short-duration colors, especially Pink and Orange
 4. Review sections with unusually dense short cuts
 5. Adjust pacing where needed
 
 This is especially useful for multicam podcast edits where visual rhythm matters.
 
----
-
 ## Repository contents
 
-| File | Description |
-|---|---|
-| `ColorByDuration.py` | Main Resolve script |
-| `README.md` | Setup and usage guide |
-| `.gitignore` | Git housekeeping |
-| `LICENSE` | MIT license |
+| File                 | Description          |
+| -------------------- | -------------------- |
+| `ColorByDuration.py` | Main Resolve script  |
+| `README.md`          | Setup and usage guide |
+| `.gitignore`         | Git housekeeping     |
+| `LICENSE`            | MIT license          |
 
 ## License
 
